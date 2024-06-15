@@ -26,5 +26,9 @@ jobs:
           cp ./Dockerfile ./docker
           cp ./target/*.jar ./docker
           cd docker
+          docker build -t docker-demo .
+          
+          docker login --username=aliyun9272912629 registry.cn-hangzhou.aliyuncs.com
+          docker push docker-demo
           
 
