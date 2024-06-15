@@ -35,8 +35,10 @@ jobs:
           cp ./Dockerfile ./docker
           cp ./target/*.jar ./docker
           cd docker
-          docker build -t docker-demo .
+#          docker build -t docker-demo .
           docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
+          
+          docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/kdyzm/xxl-job-admin:2.4.1
           docker push registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
 
 
