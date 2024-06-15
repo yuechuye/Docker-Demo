@@ -29,6 +29,6 @@ jobs:
           docker build -t docker-demo .
           
           docker login --username=aliyun9272912629 registry.cn-hangzhou.aliyuncs.com
-          docker push docker-demo
+#          docker push docker-demo
           
 
