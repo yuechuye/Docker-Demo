@@ -28,7 +28,6 @@ jobs:
           cd docker
           docker build -t docker-demo .
           docker login --username=aliyun5935525038 registry.cn-hangzhou.aliyuncs.com --password=xzq0511./
-          
-          #          docker push docker-demo
+          docker push docker-demo
           
 
