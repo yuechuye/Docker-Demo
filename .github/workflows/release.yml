@@ -28,5 +28,21 @@ jobs:
           docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
           docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
           docker push registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+          
+      - name: Connect Server
+        uses: appleboy/ssh-action@master
+        with:
+          # 同上述
+          host: 43.139.111.22
+          username: root
+          password: K7#sF9@2w5
+          port: 22
+          # ssh进入系统后执行什么样的操作。一般是关闭原有的服务在重启
+          script: |
+            docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+            docker run -p 25565:25565 -p 25565:25565 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+
+     
+
 
 
