@@ -18,7 +18,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: Build and package Java code
+      - name: 打包
         run: |
           mvn package -Dmaven.test.skip=true
           mkdir docker
@@ -29,7 +29,7 @@ jobs:
           docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
           docker push registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
           
-      - name: Connect Server
+      - name: 连接服务器
         uses: appleboy/ssh-action@master
         with:
           # 同上述
@@ -37,10 +37,11 @@ jobs:
           username: root
           password: K7#sF9@2w5
           port: 22
-          # ssh进入系统后执行什么样的操作。一般是关闭原有的服务在重启
+          # 拉镜像 运行
           script: |
             docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
-            docker run -p 8001:8001 -p 8001:8001 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+            docker run -p 11111:11111 -p 8012:8012 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+
 
      
 
