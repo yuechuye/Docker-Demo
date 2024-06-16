@@ -40,7 +40,7 @@ jobs:
           # ssh进入系统后执行什么样的操作。一般是关闭原有的服务在重启
           script: |
             docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
-            docker run -p 25565:25565 -p 25565:25565 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+            docker run -p 8001:8001 -p 8001:8001 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
 
      
 
