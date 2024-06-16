@@ -1,12 +1,19 @@
-name: Java CI with Docker
+name: Multi-server Docker Deployment
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  build:
+  deploy:
+    strategy:
+      matrix:
+        server:
+          - { host: 43.139.111.22, username: root, password: K7#sF9@2w5, port: 22 }
+          - { host: 62.234.54.176, username: root, password: keKEaiai5201314, port: 22 }
+          # Add more servers as needed
+
     runs-on: ubuntu-latest
 
     steps:
@@ -18,32 +25,25 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: 打包
+
+      - name: Package and upload the image
         run: |
           mvn package -Dmaven.test.skip=true
           mkdir docker
           cp ./Dockerfile ./docker
           cp ./target/*.jar ./docker
           cd docker
-          docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
+          docker login --username=aliyun5935525038 --password="$DOCKER_PASSWORD" registry.cn-hangzhou.aliyuncs.com
           docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
           docker push registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
-          
-      - name: 连接服务器
+
+      - name: Connect to the server and run the image
         uses: appleboy/ssh-action@master
         with:
-          # 同上述
-          host: 43.139.111.22
-          username: root
-          password: K7#sF9@2w5
-          port: 22
-          # 拉镜像 运行
+          host: ${{ matrix.server.host }}
+          username: ${{ matrix.server.username }}
+          password: ${{ matrix.server.password }}
+          port: ${{ matrix.server.port }}
           script: |
             docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
-            docker run -p 11111:11111 -p 8012:8012 --name docker-demo -d registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
-
-
-     
-
-
-
+            docker run -d -p 11111:11111 -p 8012:8012 --name docker-demo registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
