@@ -11,7 +11,8 @@ jobs:
       matrix:
         server:
           - { host: 43.139.111.22, username: root, password: K7#sF9@2w5, port: 22 }
-          - { host: 62.234.54.176, username: root, password: keKEaiai5201314, port: 22 }
+          - { host: 119.3.234.15, username: root, password: xiaochun66@, port: 22 }
+          - { host: 124.71.72.118, username: root, password: genius_server_0704, port: 22 }
           # Add more servers as needed
 
     runs-on: ubuntu-latest
