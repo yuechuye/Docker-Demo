@@ -46,6 +46,9 @@ jobs:
           password: ${{ matrix.server.password }}
           port: ${{ matrix.server.port }}
           script: |
+            
             docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
+            docker stop docker-demo 
+            docker rm -f docker-demo
             docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
             docker run -d -p 11111:11111 -p 8012:8012 --name docker-demo registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
