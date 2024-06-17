@@ -46,7 +46,7 @@ jobs:
           password: ${{ matrix.server.password }}
           port: ${{ matrix.server.port }}
           script: |
-            
+            //第二次发布测试
             docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
             docker stop docker-demo 
             docker rm -f docker-demo
