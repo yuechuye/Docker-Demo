@@ -1,4 +1,4 @@
-name: Multi-server Docker Deployment
+name: YY CI-CD 流水线
 
 on:
   push:
@@ -6,15 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
-    strategy:
-      matrix:
-        server:
-          - { host: 43.139.111.22, username: root, password: K7#sF9@2w5, port: 22 }
-          - { host: 119.3.234.15, username: root, password: xiaochun66@, port: 22 }
-          - { host: 124.71.72.118, username: root, password: genius_server_0704, port: 22 }
-          # Add more servers as needed
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +18,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-
       - name: Package and upload the image
         run: |
           mvn package -Dmaven.test.skip=true
@@ -41,14 +32,21 @@ jobs:
       - name: Connect to the server and run the image
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ matrix.server.host }}
-          username: ${{ matrix.server.username }}
-          password: ${{ matrix.server.password }}
-          port: ${{ matrix.server.port }}
+          # 同上述
+          host: 43.139.111.22
+          username: root
+          password: K7#sF9@2w5
+          port: 22
+          # 拉镜像 运行
           script: |
-            //第二次发布测试
-            docker login --username=aliyun5935525038 --password=xzq0511./ registry.cn-hangzhou.aliyuncs.com
             docker stop docker-demo 
             docker rm -f docker-demo
             docker pull registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
             docker run -d -p 11111:11111 -p 8012:8012 --name docker-demo registry.cn-hangzhou.aliyuncs.com/yuechu-docker-demo/docker-demo:2.4.1
+
+
+
+     
+
+
+
